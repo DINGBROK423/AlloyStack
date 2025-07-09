@@ -43,6 +43,15 @@ map_reduce:
     just rust_func mapper
     just rust_func reducer
 
+map_reduce_rcore:
+    for name in time rcorefdtab fatfs stdio mm; do \
+    just libos $name; \
+    done
+
+    just rust_func mapper
+    just rust_func reducer
+    just rust_func simple_file
+
 parallel_sort:
     for name in time fdtab fatfs stdio mm; do \
     just libos $name; \
@@ -143,11 +152,18 @@ init:
     rustup override set 'nightly-2023-12-01'
     rustup target add x86_64-unknown-linux-musl
     [ -f fs_images/fatfs.img ] || unzip fs_images/fatfs.zip -d fs_images
+    [ -d image_content ] || mkdir image_content
 
 asvisor:
     cargo build {{ release_flag }}
 
 cold_start_latency: asvisor all_libos
+    #!/bin/bash
+    if [ -z "$SUDO_PASSWD" ]; then
+        echo "Error: SUDO_PASSWD environment variable is not set"
+        echo "Please set it with: export SUDO_PASSWD=<your_password>" && exit 1
+    fi
+
     just rust_func hello_world
     just rust_func load_all
     @-./scripts/del_tap.sh 2>/dev/null
@@ -197,7 +213,7 @@ py_end_to_end_latency: asvisor all_libos all_py_wasm
     -sudo mount fs_images/fatfs.img image_content 2>/dev/null
     sudo -E ./scripts/gen_data.py 1 '1 * 1024 * 1024' 1 '1 * 1024 * 1024'
 
-    sleep 3
+    sleep 5
     @echo 'Python word count cost: '
     target/{{profile}}/asvisor --files isol_config/wasmtime_cpython_wordcount_c1.json --metrics total-dur 2>&1 | grep 'total_dur'
     

@@ -5,7 +5,6 @@
 #![feature(alloc_error_handler)]
 #![feature(ip_in_core)]
 #![feature(decl_macro)]
-#![feature(concat_idents)]
 #![feature(generic_const_exprs)]
 #![allow(incomplete_features)]
 #![feature(const_mut_refs)]

@@ -40,4 +40,6 @@ pub enum FdtabError {
     UndefinedOperation { op: String, fd: Fd, fd_type: String },
     #[error("ruxfs error: {0}")]
     RuxfsError(String),
+    #[error("rcore-fs error: {0}")]
+    FsError(String),
 }

@@ -26,7 +26,7 @@ use ruxfdtable::{FileLike, RuxStat};
 use ruxfs::{fops::OpenOptions, init_filesystems, init_tempfs, prepare_commonfs};
 
 fn convert(ruxstat: RuxStat) -> Stat {
-    return Stat {
+    Stat {
         st_dev: ruxstat.st_dev,
         st_ino: ruxstat.st_ino,
         st_nlink: ruxstat.st_nlink,
@@ -40,18 +40,18 @@ fn convert(ruxstat: RuxStat) -> Stat {
         st_blocks: ruxstat.st_blocks,
         st_atime: TimeSpec {
             tv_sec: ruxstat.st_atime.tv_sec,
-            tv_nsec: ruxstat.st_atime.tv_nsec,
+            tv_nsec: ruxstat.st_atime.tv_nsec as i64,
         },
         st_mtime: TimeSpec {
             tv_sec: ruxstat.st_mtime.tv_sec,
-            tv_nsec: ruxstat.st_mtime.tv_nsec,
+            tv_nsec: ruxstat.st_mtime.tv_nsec as i64,
         },
         st_ctime: TimeSpec {
             tv_sec: ruxstat.st_ctime.tv_sec,
-            tv_nsec: ruxstat.st_ctime.tv_nsec,
+            tv_nsec: ruxstat.st_ctime.tv_nsec as i64,
         },
         __unused: ruxstat.__unused,
-    };
+    }
 }
 
 fn get_fs_image_path() -> PathBuf {
