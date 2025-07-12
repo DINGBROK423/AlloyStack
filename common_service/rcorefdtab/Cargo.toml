@@ -19,6 +19,8 @@ rcore-fs-devfs = { git = "https://github.com/rcore-os/rcore-fs.git", package = "
 rcore-fs-hostfs = { git = "https://github.com/rcore-os/rcore-fs.git", package = "rcore-fs-hostfs" }
 as_std = { path = "../../as_std" }
 as_hostcall = { path = "../../as_hostcall", features = ["fatfs"] }
+log = "0.4"
+fatfs = "0.3"
 
 [features]
 default = []

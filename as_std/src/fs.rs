@@ -6,6 +6,7 @@ use as_hostcall::{
 use crate::{
     io::{Read, Write},
     libos::libos,
+    println,
 };
 
 pub struct File {
@@ -16,7 +17,10 @@ impl File {
     pub fn create(p: &str) -> Result<Self, FdtabError> {
         let flags = OpenFlags::O_CREAT;
         let mode = OpenMode::RDWR;
+        println!("File::create: calling libos!(open) for path: {}", p);
         let raw_fd = libos!(open(p, flags, mode))?;
+        println!("File::create: received fd: {}", raw_fd);
+        println!("create file: {} okok", p);
 
         Ok(File { raw_fd })
     }
@@ -24,9 +28,9 @@ impl File {
     pub fn open(p: &str) -> Result<Self, FdtabError> {
         let mode = OpenMode::RD;
         let flags = OpenFlags::empty();
-        // println!("open file: {}", p);
+        println!("open file: {} siki", p);
         let raw_fd = libos!(open(p, flags, mode))?;
-        // println!("open file: {} ok", p);
+        println!("open file: {} okok", p);
 
         Ok(File { raw_fd })
     }
@@ -54,7 +58,10 @@ impl File {
 
 impl Write for File {
     fn write(&mut self, buf: &[u8]) -> Result<usize, FdtabError> {
-        libos!(write(self.raw_fd, buf))
+        println!("File::write: calling libos!(write) with fd: {}", self.raw_fd);
+        let result = libos!(write(self.raw_fd, buf));
+        println!("File::write: received result: {:?}", result);
+        result
     }
 }
 
