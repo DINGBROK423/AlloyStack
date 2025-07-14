@@ -1,0 +1,19 @@
+[package]
+name = "ramdriver"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+block = ["driver_block"]
+ramdisk = ["block", "driver_block/ramdisk"]
+
+default =["ramdisk"]
+
+[dependencies]
+log = "0.4"
+cfg-if = "1.0"
+driver_common = { path = "../driver_common" }
+driver_block = { path = "../driver_block",optional = true}
+
