@@ -1,0 +1,28 @@
+[package]
+name = "ext4fdtab"
+version = "0.1.0"
+edition = "2021"
+authors = ["AlloyStack Contributors"]
+description = "ext4 filesystem"
+license = "MulanPSL-2.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+ext4_rs = { git = "https://github.com/DINGBROK423/ext4_rs.git" }
+spin = "0.9"
+lazy_static = "1.4"
+as_std = { path = "../../as_std" }
+as_hostcall = { path = "../../as_hostcall", features = ["fatfs"] }
+log = "0.4"
+fatfs = "0.3"
+chrono = "0.4" 
+driver_common = { path = "./ramdisk/driver_common" }
+driver_block = { path = "./ramdisk/driver_block", features = ["ramdisk"] }
+ramdriver = { path = "./ramdisk/ramdriver", features = ["ramdisk"] }
+
+[features]
+default = ["ramdisk"]
+ramdisk = ["driver_block/ramdisk", "ramdriver/ramdisk"]
+std = []

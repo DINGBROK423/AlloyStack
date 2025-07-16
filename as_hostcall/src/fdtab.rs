@@ -42,4 +42,6 @@ pub enum FdtabError {
     RuxfsError(String),
     #[error("rcore-fs error: {0}")]
     FsError(String),
+    #[error("ext4 error: {0}")]
+    Ext4Error(String),
 }
