@@ -2,7 +2,7 @@
   "services": [
     [
       "fdtab",
-      "librcorefdtab.so"
+      "librcore_sfsfdtab.so"
     ],
     [
       "stdio",

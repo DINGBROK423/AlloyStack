@@ -87,20 +87,27 @@ use as_std::{
 
 #[no_mangle]
 pub fn main() -> Result<()> {
+    println!("main: starting simple_file application");
     // let start_time = SystemTime::now();
     let path = "lines.txt";
+    println!("main: path = {}", path);
 
     /////////////////// test create/write/read. ///////////////////
     let data = "Rust LibOS Cool.";
+    println!("main: about to call File::create");
     let mut output = File::create(path)?;
+    println!("create file: {}", path);
     output.write_str(data).expect("");
+    println!("write to file: {}", data);
     // drop(output);
 
     let mut input_file = File::open(path)?;
+    println!("open file: {}", path);
     let mut file_content_buf = Vec::new();
     input_file
         .read_to_end(&mut file_content_buf)
         .expect("read failed");
+    println!("read file: {} bytes", file_content_buf.len());
 
     let file_content = String::from_utf8_lossy(&file_content_buf).to_string();
     println!("file_content: {}", file_content);
@@ -110,10 +117,12 @@ pub fn main() -> Result<()> {
 
     /////////////////// test seek. ///////////////////
     input_file.seek(0)?;
+    println!("seek to 0");
     file_content_buf.clear();
     input_file
         .read_to_end(&mut file_content_buf)
         .expect("read failed");
+    println!("read after seek: {} bytes", file_content_buf.len());
 
     assert_eq!(
         file_content,
@@ -121,7 +130,9 @@ pub fn main() -> Result<()> {
     );
 
     /////////////////// test seek. ///////////////////
-    if input_file.metadata().unwrap().st_size != file_content.len() {
+    let meta = input_file.metadata().unwrap();
+    println!("file metadata: st_size={} expect_size={}", meta.st_size, file_content.len());
+    if meta.st_size != file_content.len() {
         Err("seek failed")?
     }
 

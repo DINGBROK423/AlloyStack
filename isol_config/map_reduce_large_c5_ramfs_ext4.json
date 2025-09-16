@@ -2,7 +2,7 @@
   "services": [
     [
       "fdtab",
-      "librcorefdtab.so"
+      "libext4fdtab.so"
     ],
     [
       "stdio",
@@ -35,7 +35,7 @@
       "libsimple_file.so"
     ]
   ],
-  "fs_image": "fs_images/fatfs.img",
+  "fs_image": "fs_images/ext4.img",
   "groups": [
     {
       "list": [

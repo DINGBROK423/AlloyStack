@@ -44,6 +44,15 @@ map_reduce:
     just rust_func mapper
     just rust_func reducer
 
+map_reduce_rcore:
+    for name in time rcorefdtab fatfs stdio mm; do \
+    just libos $name; \
+    done
+
+    just rust_func mapper
+    just rust_func reducer
+    just rust_func simple_file
+
 parallel_sort:
     for name in time fdtab fatfs stdio mm; do \
     just libos $name; \

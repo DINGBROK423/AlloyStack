@@ -1,0 +1,34 @@
+[package]
+name = "rcore_sfsfdtab"
+version = "0.1.0"
+edition = "2021"
+authors = ["AlloyStack Contributors"]
+description = "rcore-fs filesystem"
+license = "MulanPSL-2.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+rcore-fs = { git = "https://github.com/rcore-os/rcore-fs.git" }
+spin = "0.9"
+lazy_static = "1.4"
+rcore-fs-ramfs = { git = "https://github.com/rcore-os/rcore-fs.git", package = "rcore-fs-ramfs" }
+rcore-fs-mountfs = { git = "https://github.com/rcore-os/rcore-fs.git", package = "rcore-fs-mountfs" }
+rcore-fs-devfs = { git = "https://github.com/rcore-os/rcore-fs.git", package = "rcore-fs-devfs" }
+rcore-fs-hostfs = { git = "https://github.com/rcore-os/rcore-fs.git", package = "rcore-fs-hostfs" }
+rcore-fs-sfs = { git = "https://github.com/rcore-os/rcore-fs.git", package = "rcore-fs-sfs"  }
+as_std = { path = "../../as_std" }
+as_hostcall = { path = "../../as_hostcall", features = ["fatfs"] }
+log = "0.4"
+fatfs = "0.3"
+chrono = "0.4" 
+
+driver_common = { path = "./ramdisk/driver_common" }
+driver_block = { path = "./ramdisk/driver_block", features = ["ramdisk"] }
+ramdriver = { path = "./ramdisk/ramdriver", features = ["ramdisk"] }
+
+[features]
+default = ["ramdisk"]
+ramdisk = ["driver_block/ramdisk", "ramdriver/ramdisk"]
+std = []

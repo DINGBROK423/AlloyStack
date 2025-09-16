@@ -76,10 +76,12 @@ fn mapper_func(my_id: &str, reducer_num: u64) -> Result<()> {
 
     /////// file reader //////
     let file_name = format!("fake_data_{}.txt", my_id);
+    println!("killer");
     let mut f = File::open(&file_name)?;
+    println!("open file: {}", file_name);
     let mut content = String::new();
-    // let content = get_input_from_mem(&file_name);
     f.read_to_string(&mut content).expect("read file failed.");
+    println!("read file: {} bytes", content.len());
     //////////////////////////
 
     println!(
