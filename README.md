@@ -31,21 +31,19 @@ AlloyStack/
 │   └── *.json # workflow specification files
 ├── fs_images/
 │   └── *.img # file system images
+├── doc/
+│   └── ... # detailed documents
 ```
 
 
 To run a new test application on AlloyStack, user need to develop functions in the `user/` directory. Then, edit the workflow specification files in the `isol_config/` directory to declare how functions compose the workflow, specify dependencies on LibOS modules, and define input parameters for functions. If the workflow involves reading datasets from files, the datasets must also be added to the file system image. Please use the following command to extract the provided image archive, which contains the source code for the Python benchmarks.
 
-```bash
-AlloyStack$ just init
-```
-
-Additionally, the repository of AlloyStack is integrated with GitHub Actions. Therefore, tools such as [act](https://github.com/nektos/act) can be used locally to quickly run some basic test cases via Docker.
+For detailed documentation, please refer to [AlloyStack User Guide](./doc/).
 
 ## Evaluation
 ### Cold start latency
 
-The cold start of AlloyStack can be categorized into two scenarios: enabling and disabling on-demand loading. The approximate cold start latency is measured using the execution time of `hello_world` and `load_all`, respectively. The following script can be used to automate the testing process. 
+The cold start of AlloyStack can be categorized into two scenarios: enabling and disabling on-demand loading. The approximate cold start latency is measured using the execution time of `hello_world` and `load_all`, respectively. You have to set the `SUDO_PASSWD` environment variable before running this test using the command `export SUDO_PASSWD=<your_password>`, since some parts of the test require it. The following script can be used to automate the testing process.
 
 ```bash
 AlloyStack$ just cold_start_latency
